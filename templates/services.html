@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Serviços</title>
+</head>
+<body>
+    <h1>Lista de Serviços</h1>
+    <ul>
+        {% for service in services %}
+            <li><a href="{% url 'service_detail' pk=service.pk %}">{{ service.name }}</a></li>
+        {% empty %}
+            <li>Nenhum serviço encontrado.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

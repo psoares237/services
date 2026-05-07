@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #0096c7;
+      color: #fff;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #0096c7;
+      color: #fff;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+      color: #fff;
+    }
+
+    nav ul li a,
+    nav ul li button {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 15px;
+      transition: all 0.3s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    nav ul li a:hover,
+    nav ul li button:hover {
+      background-color: #32bbe8;
+    }
+
+    footer {
+      background-color: #ccc;
+      color: #333;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+          <li>Olá, {{ user.username|title }}!</li>
+          <li><a href="{% url 'new_service' %}">Cadastrar Serviços</a></li>
+        {% else %}
+          <li><a href="{% url 'register' %}">Registrar</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+        <li><a href="{% url 'services' %}">Serviços</a></li>
+
+        {% if user.is_authenticated %}
+          <li> <form method="POST" action="{% url 'logout' %}">
+              {% csrf_token %}
+              <button type="submit">Sair</button>
+            </form> </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2026 PHOS CONSULTORIA</p>
+  </footer>
+</body>
+</html>

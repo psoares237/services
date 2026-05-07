@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Serviços{% endblock %}
+
+{% block content %}
+<style>
+  .services-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .services-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .services-header h1 {
+    color: #0096c7;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+  }
+
+  .services-header p {
+    color: #666;
+    font-size: 1rem;
+  }
+
+  .search-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+  }
+
+  .search-form input[type="text"] {
+    width: 100%;
+    max-width: 420px;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #e3e1e1;
+    border-radius: 6px;
+    outline: none;
+  }
+
+  .search-form input[type="text"]:focus {
+    border-color: #0096c7;
+  }
+
+  .search-form button {
+    background-color: #0096c7;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .search-form button:hover {
+    background-color: #32bbe8;
+  }
+
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .service-card {
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 150, 199, 0.25);
+  }
+
+  .service-card img {
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+  }
+
+  .service-card-content {
+    padding: 18px;
+    text-align: center;
+  }
+
+  .service-card h2 {
+    color: #0096c7;
+    font-size: 1.35rem;
+    margin: 0 0 10px;
+  }
+
+  .service-card p {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .no-results {
+    grid-column: 1 / -1;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    color: #666;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  @media (max-width: 900px) {
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .service-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .services-header h1 {
+      font-size: 1.8rem;
+    }
+
+    .search-form button {
+      width: 100%;
+      max-width: 420px;
+    }
+  }
+</style>
+
+<div class="services-container">
+  <section class="services-header">
+    <h1>Serviços</h1>
+    <p>Encontre os serviços cadastrados na plataforma PHOS Consultoria.</p>
+  </section>
+
+  <form class="search-form" method="GET" action="{% url 'services' %}">
+    <input type="text" name="search" placeholder="Buscar serviço...">
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div class="service-grid">
+    {% if services %}
+      {% for service in services %}
+        <a class="service-link" href="{% url 'service_detail' service.pk %}">
+          <article class="service-card">
+            {% if service.photo %}
+              <img src="{{ service.photo.url }}" alt="{{ service.name }}">
+            {% else %}
+              <p class="no-photo">Foto não disponível</p>
+            {% endif %}
+
+            <div class="service-card-content">
+              <h2>{{ service.name }}</h2>
+
+              {% if service.description %}
+                <p>{{ service.description }}</p>
+              {% else %}
+                <p>Sem descrição disponível.</p>
+              {% endif %}
+            </div>
+          </article>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p class="no-results">Nenhum serviço encontrado.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method ='post' enctype="multipart/form-data">
+        {% csrf_token %}
+
+    <table>
+      {{ form.as_table }}
+
+    </table>    
+
+    <button type="submit">Criar Serviço</button>
+  
+    </form>
+{% endblock %}
