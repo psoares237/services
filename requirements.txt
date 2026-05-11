@@ -11,8 +11,8 @@ httpx==0.28.1
 idna==3.13
 jiter==0.14.0
 openai==2.33.0
-opencode-ai==0.1.0a36
-psycopg2==2.9.12
+pillow==12.2.0
+psycopg2-binary==2.9.12
 pydantic==2.13.3
 pydantic_core==2.46.3
 python-dotenv==1.2.2
@@ -21,4 +21,4 @@ sqlparse==0.5.5
 tqdm==4.67.3
 typing-inspection==0.4.2
 typing_extensions==4.15.0
-tzdata==2026.2
+tzdata==2026.1
